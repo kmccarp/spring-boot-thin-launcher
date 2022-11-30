@@ -239,7 +239,6 @@ public class DependencyResolverTests {
 		// thin.properties changes bom version
 		assertThat(dependencies).filteredOn("artifact.artifactId", "spring-boot").first()
 				.is(version("1.3.8.RELEASE"));
-		;
 	}
 
 	@Test

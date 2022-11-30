@@ -64,8 +64,7 @@ public class DependencyResolverModelTests {
 			DependencyResolver resolver) {
 		Properties properties = new Properties();
 		ReflectionTestUtils.invokeMethod(resolver, "initialize", properties);
-		ProjectBuildingRequest request = ReflectionTestUtils.invokeMethod(resolver,
+		return ReflectionTestUtils.invokeMethod(resolver,
 				"getProjectBuildingRequest", properties);
-		return request;
 	}
 }

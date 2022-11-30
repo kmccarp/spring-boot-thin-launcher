@@ -147,8 +147,7 @@ public class ThinJarAppWrapper {
 		ClassLoader loader = createClassLoader(extracted, parent, child);
 		ClassUtils.overrideThreadContextClassLoader(loader);
 		reset();
-		Class<?> cls = loader.loadClass(ContextRunner.class.getName());
-		return cls;
+		return loader.loadClass(ContextRunner.class.getName());
 	}
 
 	private void reset() {
@@ -270,7 +269,7 @@ public class ThinJarAppWrapper {
 
 	private URL[] getUrls(List<Archive> archives, Archive... roots) {
 		try {
-			List<URL> urls = new ArrayList<URL>(archives.size());
+			List<URL> urls = new ArrayList<>(archives.size());
 			for (Archive archive : archives) {
 				urls.add(archive.getUrl());
 			}
@@ -294,8 +293,8 @@ public class ThinJarAppWrapper {
 			ProtectionDomain protectionDomain = getClass().getProtectionDomain();
 			CodeSource codeSource = protectionDomain.getCodeSource();
 			URI location;
-			location = (codeSource == null ? null : codeSource.getLocation().toURI());
-			String path = (location == null ? null : location.getSchemeSpecificPart());
+			location = codeSource == null ? null : codeSource.getLocation().toURI();
+			String path = location == null ? null : location.getSchemeSpecificPart();
 			if (path == null) {
 				throw new IllegalStateException(
 						"Unable to determine code source archive");
@@ -305,8 +304,8 @@ public class ThinJarAppWrapper {
 				throw new IllegalStateException(
 						"Unable to determine code source archive from " + root);
 			}
-			return (root.isDirectory() ? new ExplodedArchive(root)
-					: new JarFileArchive(root, null));
+			return root.isDirectory() ? new ExplodedArchive(root)
+					: new JarFileArchive(root, null);
 		}
 		catch (Exception e) {
 			throw new IllegalStateException("Cannt create local archive", e);

@@ -107,7 +107,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
-public class DependencyResolver {
+public final class DependencyResolver {
 
 	public static final String THIN_OFFLINE = "thin.offline";
 
@@ -339,7 +339,7 @@ public class DependencyResolver {
 		projectBuildingRequest.setBuildStartTime(new Date());
 		projectBuildingRequest.setUserProperties(properties);
 		projectBuildingRequest.setSystemProperties(System.getProperties());
-		Set<String> profiles = new LinkedHashSet<String>();
+		Set<String> profiles = new LinkedHashSet<>();
 		for (Profile profile : settings.getActiveProfiles()) {
 			profiles.add(profile.getId());
 		}
@@ -424,10 +424,9 @@ public class DependencyResolver {
 	}
 
 	private RepositoryPolicy policy(ArtifactRepositoryPolicy input) {
-		RepositoryPolicy policy = new RepositoryPolicy(input.isEnabled(),
+		return new RepositoryPolicy(input.isEnabled(),
 				RepositoryPolicy.UPDATE_POLICY_DAILY,
 				RepositoryPolicy.CHECKSUM_POLICY_WARN);
-		return policy;
 	}
 
 	private void addRepositoryIfMissing(MavenSettings settings,
@@ -628,9 +627,8 @@ public class DependencyResolver {
 			DefaultRepositorySystemSession session = createSession(properties);
 			List<ArtifactRequest> artifactRequests = getArtifactRequests(dependencies,
 					session, properties);
-			List<ArtifactResult> result = this.repositorySystem.resolveArtifacts(session,
+			return this.repositorySystem.resolveArtifacts(session,
 					artifactRequests);
-			return result;
 		}
 		catch (Exception ex) {
 			throw new IllegalStateException(ex);
@@ -739,7 +737,7 @@ class DependencyResolutionModule extends AbstractModule {
 			@Named("file") TransporterFactory file,
 			@Named("http") TransporterFactory http) {
 		// Order is decided elsewhere (by priority)
-		Set<TransporterFactory> factories = new HashSet<TransporterFactory>();
+		Set<TransporterFactory> factories = new HashSet<>();
 		factories.add(file);
 		factories.add(http);
 		return Collections.unmodifiableSet(factories);

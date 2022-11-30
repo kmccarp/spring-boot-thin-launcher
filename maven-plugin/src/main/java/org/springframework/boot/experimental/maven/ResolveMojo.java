@@ -78,7 +78,7 @@ public class ResolveMojo extends ThinJarMojo {
 	 * A flag to indicate whether to unpack the main archive (self).
 	 */
 	@Parameter(property = "thin.unpack")
-	private boolean unpack = false;
+	private boolean unpack;
 
 	/**
 	 * To look up Archiver/UnArchiver implementations
@@ -98,7 +98,7 @@ public class ResolveMojo extends ThinJarMojo {
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 
-		if (this.project.getPackaging().equals("pom")) {
+		if ("pom".equals(this.project.getPackaging())) {
 			getLog().debug("Thin resolve goal could not be applied to pom project.");
 			return;
 		}

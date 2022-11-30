@@ -49,12 +49,12 @@ class ThinPropertiesModelProcessor extends DefaultModelProcessor {
 	/**
 	 * The default extension for the artifact.
 	 */
-	final static String DEFAULT_EXTENSION = "jar";
+	static final String DEFAULT_EXTENSION = "jar";
 
 	/**
 	 * String representing an empty classifier.
 	 */
-	final static String EMPTY_CLASSIFIER = "";
+	static final String EMPTY_CLASSIFIER = "";
 
 	@Override
 	public Model read(File input, Map<String, ?> options) throws IOException {
@@ -196,11 +196,8 @@ class ThinPropertiesModelProcessor extends DefaultModelProcessor {
 				&& ObjectUtils.nullSafeEquals(artifact.getGroupId(), model.getParent().getGroupId())) {
 			return true;
 		}
-		if (ObjectUtils.nullSafeEquals("spring-boot-starter-parent", model.getParent().getArtifactId())
-				&& ObjectUtils.nullSafeEquals(artifact.getArtifactId(), "spring-boot-dependencies")) {
-			return true;
-		}
-		return false;
+		return ObjectUtils.nullSafeEquals("spring-boot-starter-parent",model.getParent().getArtifactId())
+				&& ObjectUtils.nullSafeEquals(artifact.getArtifactId(),"spring-boot-dependencies");
 	}
 
 	static Dependency dependency(DefaultArtifact artifact) {

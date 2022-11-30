@@ -49,7 +49,7 @@ import org.springframework.util.StringUtils;
  * @author Dave Syer
  *
  */
-public class ThinConverterApplication {
+public final class ThinConverterApplication {
 
 	private static final String THIN_SOURCE = "thin.source";
 	private static final String BOOT_VERSION_ATTRIBUTE = "Spring-Boot-Version";
@@ -207,10 +207,7 @@ public class ThinConverterApplication {
 	private boolean isDuplicate(Path file) {
 		String name = file.getFileName().toString();
 		String alt = name.replaceAll("[0-9]*\\.[0-9]*-[0-9]*", "SNAPSHOT");
-		if (!name.equals(alt) && file.getParent().resolve(alt).toFile().exists()) {
-			return true;
-		}
-		return false;
+		return !name.equals(alt) && file.getParent().resolve(alt).toFile().exists();
 	}
 
 	private File getTarget(File jarfile) {

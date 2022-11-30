@@ -60,5 +60,5 @@ class LogUtils {
 }
 
 enum Level {
-	OFF, ERROR, WARN, INFO, DEBUG, TRACE;
+	OFF, ERROR, WARN, INFO, DEBUG, TRACE
 }

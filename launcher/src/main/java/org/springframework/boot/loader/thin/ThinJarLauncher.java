@@ -202,7 +202,7 @@ public class ThinJarLauncher extends ExecutableArchiveLauncher {
 
 	private static String getVersion() {
 		Package pkg = ThinJarLauncher.class.getPackage();
-		return (pkg != null ? pkg.getImplementationVersion() : null);
+		return pkg != null ? pkg.getImplementationVersion() : null;
 	}
 
 	private String[] removeThinArgs(String[] args) {
@@ -432,10 +432,10 @@ public class ThinJarLauncher extends ExecutableArchiveLauncher {
 			SimpleCommandLinePropertySource commandArgs = (SimpleCommandLinePropertySource) environment
 					.getPropertySources().get("commandArgs");
 			for (String key : commandArgs.getPropertyNames()) {
-				String name = key.toString();
+				String name = key;
 				if (name.startsWith("thin.properties.")) {
 					name = name.substring("thin.properties.".length());
-					properties.setProperty(name, commandArgs.getProperty(key.toString()));
+					properties.setProperty(name, commandArgs.getProperty(key));
 				}
 			}
 		}
@@ -474,7 +474,7 @@ public class ThinJarLauncher extends ExecutableArchiveLauncher {
 
 	private static class ThinJarClassLoader extends LaunchedURLClassLoader {
 
-		private boolean parentFirst = false;
+		private boolean parentFirst;
 
 		public ThinJarClassLoader(URL[] urls, ClassLoader parent) {
 			super(urls, parent);
@@ -512,23 +512,23 @@ public class ThinJarLauncher extends ExecutableArchiveLauncher {
 			if (parentFirst) {
 				url = getParent().getResource(name);
 				if (url != null) {
-					return (url);
+					return url;
 				}
 			}
 
 			url = findResource(name);
 			if (url != null) {
-				return (url);
+				return url;
 			}
 
 			if (!parentFirst) {
 				url = getParent().getResource(name);
 				if (url != null) {
-					return (url);
+					return url;
 				}
 			}
 
-			return (null);
+			return null;
 
 		}
 

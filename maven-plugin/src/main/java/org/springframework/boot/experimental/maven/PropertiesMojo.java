@@ -71,7 +71,7 @@ public class PropertiesMojo extends ThinJarMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 
-		if (this.project.getPackaging().equals("pom")) {
+		if ("pom".equals(this.project.getPackaging())) {
 			getLog().debug("Thin properties goal could not be applied to pom project.");
 			return;
 		}

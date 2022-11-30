@@ -38,35 +38,32 @@ public class ContextRunner {
 
 	private ConfigurableApplicationContext context;
 	private Thread runThread;
-	private boolean running = false;
+	private boolean running;
 	private Throwable error;
 	private long timeout = 120000;
 
 	public void run(final String source, final Map<String, Object> properties,
 			final String... args) {
 		// Run in new thread to ensure that the context classloader is setup
-		this.runThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					StandardEnvironment environment = new StandardEnvironment();
-					environment.getPropertySources().addAfter(
-							StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME,
-							new MapPropertySource("appDeployer", properties));
-					String main = source;
-					if (source==null) {
-						main = SpringApplication.class.getName();
-					}
-					SpringApplicationBuilder builder = builder(main)
-							.registerShutdownHook(false)
-							.environment(environment);
-					context = builder.run(args);
+		this.runThread = new Thread(() -> {
+			try {
+				StandardEnvironment environment = new StandardEnvironment();
+				environment.getPropertySources().addAfter(
+						StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME,
+						new MapPropertySource("appDeployer",properties));
+				String main = source;
+				if (source == null) {
+					main = SpringApplication.class.getName();
 				}
-				catch (Throwable ex) {
-					error = ex;
-				}
-
+				SpringApplicationBuilder builder = builder(main)
+						.registerShutdownHook(false)
+						.environment(environment);
+				context = builder.run(args);
 			}
+			catch (Throwable ex) {
+				error = ex;
+			}
+
 		});
 		this.runThread.start();
 		try {

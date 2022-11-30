@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LocalRepositoryTests {
 
 	// Counter for performance testing
-	private final static int COUNT = 1;
+	private static final int COUNT = 1;
 
 	@Test
 	@RepeatedTest(COUNT)
