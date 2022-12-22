@@ -59,8 +59,7 @@ public class ThinJarAppDeployerBeanTests {
 				Collections.<String, String>emptyMap());
 		AppDeploymentRequest request = new AppDeploymentRequest(definition, resource,
 				Collections.<String, String>emptyMap(), Arrays.asList(args));
-		String deployed = deployer.deploy(request);
-		return deployed;
+		return deployer.deploy(request);
 	}
 
 }

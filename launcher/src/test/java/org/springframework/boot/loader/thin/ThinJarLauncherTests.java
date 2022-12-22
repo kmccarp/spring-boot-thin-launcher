@@ -475,8 +475,7 @@ public class ThinJarLauncherTests {
 			userhome.mkdirs();
 		}
 		String settings = StreamUtils.copyToString(
-				new FileInputStream(
-						new File("src/test/resources/settings/repo/.m2/settings.xml")),
+				new FileInputStream("src/test/resources/settings/repo/.m2/settings.xml"),
 				Charset.defaultCharset());
 		settings = settings.replace("${repo.url}",
 				"file://" + new File("target/test-classes/repo").getAbsolutePath());

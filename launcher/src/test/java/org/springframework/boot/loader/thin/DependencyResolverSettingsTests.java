@@ -99,8 +99,7 @@ public class DependencyResolverSettingsTests {
 			userhome.mkdirs();
 		}
 		String settings = StreamUtils.copyToString(
-				new FileInputStream(
-						new File("src/test/resources/settings/repo/.m2/settings.xml")),
+				new FileInputStream("src/test/resources/settings/repo/.m2/settings.xml"),
 				Charset.defaultCharset());
 		settings = settings.replace("${repo.url}",
 				"file://" + new File("target/test-classes/repo").getAbsolutePath());
@@ -141,9 +140,8 @@ public class DependencyResolverSettingsTests {
 	private ProjectBuildingRequest getProjectBuildingRequest(DependencyResolver resolver,
 			Properties properties) {
 		ReflectionTestUtils.invokeMethod(resolver, "initialize", properties);
-		ProjectBuildingRequest request = ReflectionTestUtils.invokeMethod(resolver,
+		return ReflectionTestUtils.invokeMethod(resolver,
 				"getProjectBuildingRequest", properties);
-		return request;
 	}
 
 }

@@ -37,7 +37,7 @@ public class AppMavenIT {
 
 	private Process started;
 
-	private static boolean online = false;
+	private static boolean online;
 
 	@AfterEach
 	public void after() {

@@ -39,7 +39,7 @@ public class ThinJarAppDeployerTests {
 	private static ThinJarAppDeployer deployer = new ThinJarAppDeployer();
 
 	// Counter for performance testing
-	private final static int COUNT = 2;
+	private static final int COUNT = 2;
 
 	@Test
 	@RepeatedTest(COUNT)
@@ -117,8 +117,7 @@ public class ThinJarAppDeployerTests {
 				Collections.<String, String>emptyMap());
 		AppDeploymentRequest request = new AppDeploymentRequest(definition, resource,
 				Collections.<String, String>emptyMap(), Arrays.asList(args));
-		String deployed = deployer.deploy(request);
-		return deployed;
+		return deployer.deploy(request);
 	}
 
 	public static void main(String[] args) {

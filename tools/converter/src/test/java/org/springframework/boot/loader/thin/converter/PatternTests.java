@@ -39,9 +39,6 @@ public class PatternTests {
 	private boolean isDuplicate(Path file) {
 		String name = file.getFileName().toString();
 		String alt = name.replaceAll("[0-9]*\\.[0-9]*-[0-9]*", "SNAPSHOT");
-		if (!name.equals(alt)) {
-			return true;
-		}
-		return false;
+		return !name.equals(alt);
 	}
 }
